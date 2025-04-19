@@ -39,3 +39,12 @@ dist/
 .vscode/
 *.swp
 *.swo
+
+# memoフォルダ
+memo/
+
+# sandboxフォルダ
+sandbox/
+
+# Cursorフォルダ
+.cursor/
