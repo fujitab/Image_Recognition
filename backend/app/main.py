@@ -20,9 +20,9 @@ logging.basicConfig(
 logger = logging.getLogger("image_recognition")
 
 app = FastAPI(
-    title=settings["IMAGE_RECOGNITION"],
+    title="Image Recognition",
     description="画像認識APIサービス",
-    version=settings["0.0.1"]
+    version="0.0.1"
 )
 
 # CORSの設定 
