@@ -9,12 +9,12 @@ from .services.gemini import analyze_image
 from .config import settings
 
 app = FastAPI(
-    title=settings["APP_NAME"],
+    title=settings["IMAGE_RECOGNITION"],
     description="画像認識APIサービス",
-    version=settings["API_VERSION"]
+    version=settings["0.0.1"]
 )
 
-# CORSの設定
+# CORSの設定 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings["ALLOWED_ORIGINS"],
