@@ -34,6 +34,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# MIMEタイプと拡張子のマッピングを追加する
+MIME_TO_EXTENSION = {
+    "image/jpeg": ".jpg",
+    "image/png": ".png",
+    "image/gif": ".gif",
+    "image/webp": ".webp"
+}
+
 @app.get("/")
 async def root():
     """APIのルートエンドポイント"""
@@ -88,6 +96,11 @@ async def analyze_image_endpoint(file: UploadFile = File(...)):
     # 一時ファイルとして保存（UUIDを使用してユニークなファイル名を生成）
     temp_dir = settings["TEMP_DIR"]
     file_extension = os.path.splitext(file.filename)[1]
+
+    # 拡張子がない場合はMIMEタイプから判断
+    if not file_extension:
+        file_extension = MIME_TO_EXTENSION.get(file.content_type, ".jpg")
+
     temp_filename = f"{uuid.uuid4()}{file_extension}"
     temp_path = os.path.join(temp_dir, temp_filename)
     
