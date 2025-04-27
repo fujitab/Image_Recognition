@@ -8,11 +8,10 @@ import {
   Platform,
   Alert,
   Image,
-  ScrollView,
-  Dimensions
+  ScrollView
 } from 'react-native';
 
-// 画像認識機能を復活
+// 画像認識機能
 import * as ImagePicker from 'expo-image-picker';
 import { analyzeImage } from '../../services/api';
 
@@ -20,7 +19,6 @@ export default function HomeScreen() {
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const screenWidth = Dimensions.get('window').width;
 
   // 画像選択
   const pickImage = async () => {
@@ -53,17 +51,12 @@ export default function HomeScreen() {
     }
   };
 
-  // デバイス情報表示
-  const showDeviceInfo = () => {
-    Alert.alert(
-      'デバイス情報',
-      `プラットフォーム: ${Platform.OS}\n画面幅: ${screenWidth}px`
-    );
-  };
-
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
+      <ScrollView 
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.scrollContent}
+      >
         <Text style={styles.title}>画像認識アプリ</Text>
         
         <View style={styles.imageContainer}>
@@ -87,14 +80,6 @@ export default function HomeScreen() {
             color="#2ecc71"
           />
         </View>
-        
-        <View style={styles.devButtons}>
-          <Button 
-            title="デバイス情報" 
-            onPress={showDeviceInfo} 
-            color="#9b59b6"
-          />
-        </View>
 
         {loading && (
           <View style={styles.resultContainer}>
@@ -110,11 +95,11 @@ export default function HomeScreen() {
             </ScrollView>
           </View>
         )}
-        
-        <Text style={styles.footer}>
-          Image Recognition App - v1.0
-        </Text>
-      </View>
+      </ScrollView>
+      
+      <Text style={styles.footer}>
+        Image Recognition App - v1.0
+      </Text>
     </SafeAreaView>
   );
 }
@@ -124,12 +109,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
-  content: {
+  scrollContainer: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    padding: 20,
+  },
+  scrollContent: {
+    paddingHorizontal: 20,
     paddingTop: 40,
+    paddingBottom: 60, // フッターの分の余白
+    alignItems: 'center',
   },
   title: {
     fontSize: 28,
@@ -163,9 +150,6 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 20,
   },
-  devButtons: {
-    marginBottom: 20,
-  },
   resultContainer: {
     padding: 15,
     backgroundColor: '#ecf0f1',
@@ -194,7 +178,8 @@ const styles = StyleSheet.create({
   },
   footer: {
     position: 'absolute',
-    bottom: 20,
+    bottom: 10,
+    alignSelf: 'center',
     color: '#7f8c8d',
   },
 });
