@@ -36,3 +36,6 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+# 環境変数ファイル（個人設定）
+environment.js
